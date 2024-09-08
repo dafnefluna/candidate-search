@@ -1,0 +1,2 @@
+// TODO: Create an interface for the Candidate objects returned by the API
+// THEN the information for one candidate should be displayed, including the candidate's name, username, location, avatar, email, html_url, and company
