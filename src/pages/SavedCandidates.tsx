@@ -7,3 +7,5 @@ const SavedCandidates = () => {
 };
 
 export default SavedCandidates;
+
+

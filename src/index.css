@@ -94,7 +94,7 @@ tbody tr:nth-child(odd) {
   background-color: #333333;
 }
 
-.nav {
+nav {
   display: flex;
   justify-content: flex-start;
   padding: 1em 2em;
