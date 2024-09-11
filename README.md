@@ -1,50 +1,30 @@
-# React + TypeScript + Vite
+# Candidate-Search
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This app is intended to help recruiters look at different github users and to find potential hiring candidates. Recruiters are able to save their options or simply say no and move on to the next user option.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Please visit this link to view a deployed version of this app [Click Here](<https://drive.google.com/file/d/13YHeehEvA9ZlC5hVYgpHpfYANzC-sG8v/view>)
 
-## Expanding the ESLint configuration
+- [Installation] (#installation)
+- [Usage] (#usage)
+- [Credits] (#credits)
+- [License] (#license)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Installation
 
-- Configure the top-level `parserOptions` property like this:
+To properly replicate this generator users must download the all the folders in my repo [GitHub Repo](<https://github.com/dafnefluna/candidate-search>). Please checkout the package.json to get a list of packages you will need to install for this app to properly run. If you follow the proper installion represented in the package.json, all dependencies should be set.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+You will need to create a vite server as well. Visit the vite documentation for more information.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Usage
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+To replicate the app you'll need to apply for a github token under developer settings. To simply use the app, you just need to either save or say no on a candidate.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## License
+
+This project is licensed through MIT Licenses.
+
+## Questions
+
+For further questions or to report issues please email Dafne Luna at <dafne.faviola.luna@gmail.com>

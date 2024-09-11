@@ -41,7 +41,7 @@ const CandidateSearch = () => {
 
   const queryUser = async () => {
     const singleUser: Candidate = await searchGithubUser(current.login);
-    console.log('current here: ', current);
+    console.log(singleUser);
   }
 
   // query the GitHub API
@@ -64,13 +64,17 @@ setCurrent(allUsers[randomIndex])
 
 const save = async () => {
   const saved = localStorage.getItem('candidateSaves');
-  let parsed = [];
-  if (saved){
-    parsed.push(JSON.parse(saved));
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    if (parsed != typeof 'string') {
+      parsed.push(current);
+      localStorage.setItem("candidateSaves", JSON.stringify(parsed));
+    }
+  } else {
+    localStorage.setItem("candidateSaves", JSON.stringify([current]));
   }
-  parsed.push(current)
-    localStorage.setItem("candidateSaves", JSON.stringify(parsed));
-    const randomIndex = Math.floor(Math.random() * allUsers.length);
+
+  const randomIndex = Math.floor(Math.random() * allUsers.length);
   setCurrent(allUsers[randomIndex])
 }
 
