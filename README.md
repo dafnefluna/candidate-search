@@ -4,7 +4,7 @@
 
 This app is intended to help recruiters look at different github users and to find potential hiring candidates. Recruiters are able to save their options or simply say no and move on to the next user option.
 
-Please visit this link to view a deployed version of this app [Click Here](<https://drive.google.com/file/d/13YHeehEvA9ZlC5hVYgpHpfYANzC-sG8v/view>)
+Please visit this link to view a deployed version of this app [Click Here](<https://candidate-search-tox9.onrender.com>)
 
 - [Installation] (#installation)
 - [Usage] (#usage)
