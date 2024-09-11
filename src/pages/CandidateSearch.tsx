@@ -1,9 +1,9 @@
-import { useState, useEffect, JSXElementConstructor, ReactElement, ReactNode, ReactPortal } from 'react';
+import { useState, useEffect, } from 'react';
 import { searchGithub, searchGithubUser } from '../api/API';
 import Candidate from '../interfaces/Candidate.interface';
-//import { candidate } from '../interfaces/Candidate.interface'
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
 
 // first set up the scaffolding for the card
 // then you have to pull the data from the API and using the interface pull out what I need
@@ -12,13 +12,13 @@ import ListGroup from 'react-bootstrap/ListGroup';
   {
     return searchGithubUser;
   }
-
 ]
   */
+   // const [variableData, methodToUpdate] = useState()
+   // state for our Current Candidate --> INITALIZING fields to empty strings ''
+  // Set State for ALL users that we get back from the gitHub API Call
 
 const CandidateSearch = () => {
-  // const [variableData, methodToUpdate] = useState()
-  // state for our Current Candidate --> INITALIZING fields to empty strings ''
   const [current, setCurrent] = useState<Candidate>({
     name: '',
     login: '',
@@ -28,60 +28,79 @@ const CandidateSearch = () => {
     html_url: '',
     company: ''
   });
-  
-  // Set State for ALL users that we get back from the gitHub API Call
+
   const [allUsers, setAllUsers] = useState<Candidate[]>([]);
   // Make the QUERY for data
-  const queryGitHub = async() => {
+  const queryGitHub = async () => {
     const results: Candidate[] = await searchGithub();
     // update our state(results)
-    setAllUsers(results); 
-   // queryUser()
+    console.log('results (non State): ', results);
+    setAllUsers(results); //setting state. 
+    setCurrent(results[0]);
   };
 
-  //function to garb a random/select a single USER --> USERNAME
-  const selectUser = () => {
-      // logic to randomly select a USER (INDEX)
-      return allUsers[0];
-  }
-
   const queryUser = async () => {
-    const selected = allUsers[0];
-    console.log("-------------", selected);
-    const singleUser: Candidate = await searchGithubUser(selected.login);
-
-    setCurrent(singleUser);
+    const singleUser: Candidate = await searchGithubUser(current.login);
+    console.log('current here: ', current);
   }
 
   // query the GitHub API
-
-  useEffect(() => {  // useEffect is called/invoked when the Component is called but before it RENDERS the VIEW
+  // Fetch GitHub data when the component mounts
+  useEffect(() => {
     queryGitHub();
-    queryUser();
-  }, [])
+  }, []); // Empty dependency array ensures this runs only on component mount
+
+  // Call queryUser only when `current` has been updated
+  useEffect(() => {
+    if (current.login) {
+      queryUser();
+    }
+  }, [current]); // This will run whenever `current` changes
+
+const skip = async () => {
+const randomIndex = Math.floor(Math.random() * allUsers.length);
+setCurrent(allUsers[randomIndex])
+}
+
+const save = async () => {
+  const saved = localStorage.getItem('candidateSaves');
+  let parsed = [];
+  if (saved){
+    parsed.push(JSON.parse(saved));
+  }
+  parsed.push(current)
+    localStorage.setItem("candidateSaves", JSON.stringify(parsed));
+    const randomIndex = Math.floor(Math.random() * allUsers.length);
+  setCurrent(allUsers[randomIndex])
+}
 
   return (
     <section className="candidateCards">
-   {/*}  {candidate.map((candidateSet: { avatar: string | undefined; name: string | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; location: string | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; email: string | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; repo: string | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; company: string | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }) => ( */ }
-      { !current.name ? '' : ( 
+      {/* Use login instead of name to check if user data is loaded */}
+      {!current.login ? (
+        <p>Loading...</p> // Show loading indicator
+      ) : (
         <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src={current.avatar_url} />
-          {/* avatar goes in card.img */}
           <Card.Body>
             <Card.Title>{current.login}</Card.Title>
           </Card.Body>
           <Card.Body>
             <ListGroup className="list-group-flush">
-              <ListGroup.Item>{current.location}</ListGroup.Item>
-              <ListGroup.Item>{current.email}</ListGroup.Item>
-              <ListGroup.Item><Card.Link href="#">{current.html_url}</Card.Link></ListGroup.Item>
-              <ListGroup.Item>{current.company}</ListGroup.Item>
+              <ListGroup.Item>{current.location || 'Location not available'}</ListGroup.Item>
+              <ListGroup.Item>{current.email || 'Email not available'}</ListGroup.Item>
+              <ListGroup.Item>
+                <Card.Link href={current.html_url}>{current.html_url}</Card.Link>
+              </ListGroup.Item>
+              <ListGroup.Item>{current.company || 'Company not available'}</ListGroup.Item>
             </ListGroup>
           </Card.Body>
+          <Button onClick={skip}>No</Button>{' '}
+          <Button onClick={save} >Save</Button>{' '}
         </Card>
       )}
     </section>
-  )
+  );
 };
 
 export default CandidateSearch;
